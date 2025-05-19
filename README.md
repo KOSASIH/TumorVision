@@ -21,7 +21,7 @@ TumorVision is an innovative application that combines AI and machine learning t
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/TumorVision.git
+git clone https://github.com/KOSASIH/TumorVision.git
 
 # Navigate to the project directory
 cd TumorVision

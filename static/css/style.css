@@ -1,0 +1,89 @@
+/* TumorVision Custom Styles */
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8f9fa;
+}
+
+.navbar {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card {
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.card-header {
+    font-weight: 500;
+}
+
+.shadow {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+.feature-icon {
+    font-size: 2.5rem;
+    color: #0d6efd;
+    margin-bottom: 1rem;
+}
+
+.footer {
+    border-top: 1px solid #e9ecef;
+}
+
+/* Form styling */
+.form-control:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+.btn-primary {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0b5ed7;
+    border-color: #0a58ca;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Results page styling */
+.progress {
+    height: 25px;
+    border-radius: 5px;
+    margin-top: 8px;
+}
+
+.progress-bar {
+    font-weight: 500;
+    line-height: 25px;
+}
+
+/* Print styles */
+@media print {
+    .navbar, .footer, .btn, .alert-warning {
+        display: none !important;
+    }
+    
+    .card {
+        border: 1px solid #ddd !important;
+        box-shadow: none !important;
+    }
+    
+    body {
+        padding: 0;
+        margin: 0;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .col-md-5, .col-md-7 {
+        padding: 0;
+    }
+}

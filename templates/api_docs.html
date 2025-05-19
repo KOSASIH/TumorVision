@@ -1,0 +1,256 @@
+{% extends "base.html" %}
+
+{% block title %}API Documentation - TumorVision{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h2 class="text-center mb-0">TumorVision API Documentation</h2>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-info">
+                    <p class="mb-0">
+                        <i class="bi bi-info-circle-fill me-2"></i>
+                        The TumorVision API allows you to integrate our AI-powered MRI analysis capabilities into your own applications.
+                    </p>
+                </div>
+                
+                <h3 class="mt-4">Authentication</h3>
+                <p>
+                    All API requests require an API key. You can obtain an API key by registering for a TumorVision account.
+                    Include your API key in the request header as follows:
+                </p>
+                <div class="bg-light p-3 rounded mb-3">
+                    <code>X-API-Key: your_api_key_here</code>
+                </div>
+                
+                <h3 class="mt-4">Endpoints</h3>
+                
+                <div class="card mb-4">
+                    <div class="card-header bg-secondary text-white">
+                        <h4 class="mb-0">POST /api/v1/analyze</h4>
+                    </div>
+                    <div class="card-body">
+                        <p>Analyze an MRI scan for tumor detection.</p>
+                        
+                        <h5>Request</h5>
+                        <p><strong>Content-Type:</strong> multipart/form-data</p>
+                        <table class="table table-bordered">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Parameter</th>
+                                    <th>Type</th>
+                                    <th>Required</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>file</td>
+                                    <td>File</td>
+                                    <td>Yes</td>
+                                    <td>The MRI scan image file (PNG, JPG, JPEG, DICOM, NIfTI)</td>
+                                </tr>
+                                <tr>
+                                    <td>scan_type</td>
+                                    <td>String</td>
+                                    <td>No</td>
+                                    <td>Type of scan (T1, T2, FLAIR, etc.). Default: auto-detect</td>
+                                </tr>
+                                <tr>
+                                    <td>include_recommendations</td>
+                                    <td>Boolean</td>
+                                    <td>No</td>
+                                    <td>Whether to include treatment recommendations. Default: true</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <h5 class="mt-4">Response</h5>
+                        <p><strong>Content-Type:</strong> application/json</p>
+                        <div class="bg-light p-3 rounded">
+<pre><code>{
+  "success": true,
+  "data": {
+    "tumor_detected": true,
+    "confidence": 0.95,
+    "location": "Right frontal lobe",
+    "size": "2.3 cm x 1.8 cm",
+    "malignancy_probability": 0.72,
+    "recommendations": [
+      "Further diagnostic imaging recommended",
+      "Consider biopsy for definitive diagnosis",
+      "Consult with neurosurgery team"
+    ]
+  }
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mb-4">
+                    <div class="card-header bg-secondary text-white">
+                        <h4 class="mb-0">GET /api/v1/status</h4>
+                    </div>
+                    <div class="card-body">
+                        <p>Check the status of the API service.</p>
+                        
+                        <h5>Request</h5>
+                        <p>No parameters required.</p>
+                        
+                        <h5 class="mt-4">Response</h5>
+                        <p><strong>Content-Type:</strong> application/json</p>
+                        <div class="bg-light p-3 rounded">
+<pre><code>{
+  "status": "operational",
+  "version": "1.0.0",
+  "uptime": "99.98%"
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3 class="mt-4">Error Handling</h3>
+                <p>
+                    The API uses standard HTTP status codes to indicate the success or failure of a request.
+                    In case of an error, the response will include an error message and code.
+                </p>
+                <div class="bg-light p-3 rounded">
+<pre><code>{
+  "success": false,
+  "error": {
+    "code": "invalid_file_format",
+    "message": "The uploaded file is not a valid MRI scan format."
+  }
+}</code></pre>
+                </div>
+                
+                <h3 class="mt-4">Rate Limits</h3>
+                <p>
+                    The API has the following rate limits:
+                </p>
+                <ul>
+                    <li>Free tier: 10 requests per day</li>
+                    <li>Professional tier: 100 requests per day</li>
+                    <li>Enterprise tier: Custom limits</li>
+                </ul>
+                
+                <div class="alert alert-warning mt-4">
+                    <h5>Important Note:</h5>
+                    <p class="mb-0">
+                        This API is intended for use by medical professionals only. The analysis provided should be used as a decision support tool and not as a replacement for professional medical judgment.
+                    </p>
+                </div>
+                
+                <h3 class="mt-4">Code Examples</h3>
+                
+                <ul class="nav nav-tabs" id="codeExampleTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="python-tab" data-bs-toggle="tab" data-bs-target="#python" type="button" role="tab">Python</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="javascript-tab" data-bs-toggle="tab" data-bs-target="#javascript" type="button" role="tab">JavaScript</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="curl-tab" data-bs-toggle="tab" data-bs-target="#curl" type="button" role="tab">cURL</button>
+                    </li>
+                </ul>
+                <div class="tab-content p-3 border border-top-0 rounded-bottom" id="codeExampleTabsContent">
+                    <div class="tab-pane fade show active" id="python" role="tabpanel">
+<pre><code>import requests
+
+url = "https://api.tumorvision.com/api/v1/analyze"
+api_key = "your_api_key_here"
+
+headers = {
+    "X-API-Key": api_key
+}
+
+files = {
+    "file": open("mri_scan.jpg", "rb")
+}
+
+data = {
+    "scan_type": "T1",
+    "include_recommendations": True
+}
+
+response = requests.post(url, headers=headers, files=files, data=data)
+result = response.json()
+
+if result["success"]:
+    print(f"Tumor detected: {result['data']['tumor_detected']}")
+    if result['data']['tumor_detected']:
+        print(f"Confidence: {result['data']['confidence']}")
+        print(f"Location: {result['data']['location']}")
+        print(f"Recommendations: {result['data']['recommendations']}")
+else:
+    print(f"Error: {result['error']['message']}")</code></pre>
+                    </div>
+                    <div class="tab-pane fade" id="javascript" role="tabpanel">
+<pre><code>const analyzeImage = async () => {
+  const url = 'https://api.tumorvision.com/api/v1/analyze';
+  const apiKey = 'your_api_key_here';
+  
+  const formData = new FormData();
+  formData.append('file', document.getElementById('fileInput').files[0]);
+  formData.append('scan_type', 'T1');
+  formData.append('include_recommendations', 'true');
+  
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'X-API-Key': apiKey
+      },
+      body: formData
+    });
+    
+    const result = await response.json();
+    
+    if (result.success) {
+      console.log('Tumor detected:', result.data.tumor_detected);
+      if (result.data.tumor_detected) {
+        console.log('Confidence:', result.data.confidence);
+        console.log('Location:', result.data.location);
+        console.log('Recommendations:', result.data.recommendations);
+      }
+    } else {
+      console.error('Error:', result.error.message);
+    }
+  } catch (error) {
+    console.error('Request failed:', error);
+  }
+};</code></pre>
+                    </div>
+                    <div class="tab-pane fade" id="curl" role="tabpanel">
+<pre><code>curl -X POST \
+  https://api.tumorvision.com/api/v1/analyze \
+  -H 'X-API-Key: your_api_key_here' \
+  -F 'file=@/path/to/mri_scan.jpg' \
+  -F 'scan_type=T1' \
+  -F 'include_recommendations=true'</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+<style>
+    pre {
+        margin-bottom: 0;
+    }
+    .nav-tabs .nav-link {
+        color: #495057;
+    }
+    .nav-tabs .nav-link.active {
+        font-weight: 500;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}TumorVision - AI-Powered MRI Analysis{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h2 class="text-center mb-0">MRI Scan Analysis</h2>
+            </div>
+            <div class="card-body">
+                <div class="text-center mb-4">
+                    <img src="{{ url_for('static', filename='img/brain-scan.png') }}" alt="Brain MRI Scan" class="img-fluid rounded" style="max-height: 200px;">
+                    <p class="lead mt-3">Upload an MRI scan for AI-powered tumor detection and analysis</p>
+                </div>
+                
+                <form action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data" class="mb-4">
+                    <div class="mb-3">
+                        <label for="file" class="form-label">Select MRI Scan File</label>
+                        <input class="form-control" type="file" id="file" name="file" accept=".png,.jpg,.jpeg,.dcm,.nii,.nii.gz" required>
+                        <div class="form-text">Supported formats: PNG, JPG, JPEG, DICOM, NIfTI</div>
+                    </div>
+                    
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">Analyze Scan</button>
+                    </div>
+                </form>
+                
+                <div class="alert alert-info">
+                    <h5>How it works:</h5>
+                    <ol>
+                        <li>Upload your MRI scan</li>
+                        <li>Our AI model analyzes the image</li>
+                        <li>Receive detailed analysis and treatment recommendations</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card mt-4 shadow">
+            <div class="card-header bg-secondary text-white">
+                <h3 class="mb-0">Why Choose TumorVision?</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 text-center mb-3">
+                        <div class="feature-icon">
+                            <i class="bi bi-lightning-charge-fill fs-1 text-primary"></i>
+                        </div>
+                        <h4>Fast Analysis</h4>
+                        <p>Get results in seconds, not days</p>
+                    </div>
+                    <div class="col-md-4 text-center mb-3">
+                        <div class="feature-icon">
+                            <i class="bi bi-graph-up fs-1 text-primary"></i>
+                        </div>
+                        <h4>High Accuracy</h4>
+                        <p>Over 95% detection accuracy</p>
+                    </div>
+                    <div class="col-md-4 text-center mb-3">
+                        <div class="feature-icon">
+                            <i class="bi bi-shield-check fs-1 text-primary"></i>
+                        </div>
+                        <h4>Secure</h4>
+                        <p>HIPAA compliant data handling</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+<style>
+    .feature-icon {
+        margin-bottom: 1rem;
+    }
+</style>
+{% endblock %}

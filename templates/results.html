@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block title %}Analysis Results - TumorVision{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h2 class="text-center mb-0">MRI Scan Analysis Results</h2>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="card mb-4">
+                            <div class="card-header bg-secondary text-white">
+                                <h4 class="mb-0">Uploaded Scan</h4>
+                            </div>
+                            <div class="card-body text-center">
+                                <img src="{{ url_for('static', filename=image_file.replace('static/', '')) }}" alt="Uploaded MRI Scan" class="img-fluid rounded">
+                                <div class="mt-2">
+                                    <a href="{{ url_for('static', filename=image_file.replace('static/', '')) }}" class="btn btn-sm btn-outline-primary" target="_blank">View Full Size</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-7">
+                        <div class="card mb-4">
+                            <div class="card-header {% if results.tumor_detected %}bg-danger{% else %}bg-success{% endif %} text-white">
+                                <h4 class="mb-0">
+                                    {% if results.tumor_detected %}
+                                        Tumor Detected
+                                    {% else %}
+                                        No Tumor Detected
+                                    {% endif %}
+                                </h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <h5>Confidence Level:</h5>
+                                    <div class="progress">
+                                        <div class="progress-bar {% if results.confidence > 0.8 %}bg-danger{% elif results.confidence > 0.5 %}bg-warning{% else %}bg-success{% endif %}" 
+                                             role="progressbar" 
+                                             style="width: {{ results.confidence * 100 }}%;" 
+                                             aria-valuenow="{{ results.confidence * 100 }}" 
+                                             aria-valuemin="0" 
+                                             aria-valuemax="100">
+                                            {{ "%.1f"|format(results.confidence * 100) }}%
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                {% if results.tumor_detected %}
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h5>Location:</h5>
+                                        <p>{{ results.location }}</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h5>Size:</h5>
+                                        <p>{{ results.size }}</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <h5>Malignancy Probability:</h5>
+                                    <div class="progress">
+                                        <div class="progress-bar {% if results.malignancy_probability > 0.7 %}bg-danger{% elif results.malignancy_probability > 0.4 %}bg-warning{% else %}bg-info{% endif %}" 
+                                             role="progressbar" 
+                                             style="width: {{ results.malignancy_probability * 100 }}%;" 
+                                             aria-valuenow="{{ results.malignancy_probability * 100 }}" 
+                                             aria-valuemin="0" 
+                                             aria-valuemax="100">
+                                            {{ "%.1f"|format(results.malignancy_probability * 100) }}%
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        {% if results.tumor_detected %}
+                        <div class="card">
+                            <div class="card-header bg-info text-white">
+                                <h4 class="mb-0">Recommendations</h4>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-group">
+                                    {% for recommendation in results.recommendations %}
+                                    <li class="list-group-item">{{ recommendation }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <a href="{{ url_for('index') }}" class="btn btn-primary">Analyze Another Scan</a>
+                    <button class="btn btn-outline-secondary ms-2" onclick="window.print()">Print Results</button>
+                </div>
+                
+                <div class="alert alert-warning mt-4">
+                    <h5>Disclaimer:</h5>
+                    <p>This analysis is provided as a decision support tool for medical professionals. It should not replace professional medical judgment. Always consult with appropriate specialists for definitive diagnosis and treatment planning.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
